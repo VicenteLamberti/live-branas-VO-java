@@ -9,13 +9,16 @@ import java.util.regex.Pattern;
 
 public class ParkingService {
 
-    private Map<String,ParkedCar> parkedCars = new HashMap<>();
+
+
+    private final ParkedCarDAO parkedCarDAO;
 
     private final Clock clock;
 
 
-    public ParkingService(Clock clock) {
+    public ParkingService(Clock clock, ParkedCarDAO parkedCarDAO) {
         this.clock = clock;
+        this.parkedCarDAO = parkedCarDAO;
     }
 
     public void checking(String plate){
@@ -31,19 +34,24 @@ public class ParkingService {
             throw  new RuntimeException("Invalid plate");
         }
         var checkingDate = this.clock.getCurrentDate();
-        this.parkedCars.put(plate,new ParkedCar(plate,checkingDate));
+        ParkedCar parkedCar = new ParkedCar(plate, checkingDate);
+        this.parkedCarDAO.save(parkedCar);
     }
 
     public Ticket checkout(String plate){
-        var parkedCar = this.parkedCars.get(plate);
+        var parkedCar = this.parkedCarDAO.get(plate);
         if(parkedCar == null){
             throw new RuntimeException("Parked car not found");
         }
+
         var checkoutDate = this.clock.getCurrentDate();
-        Duration duration = Duration.between(parkedCar.getCheckingDate(), checkoutDate);
+        parkedCar.setCheckoutDate(checkoutDate);
+        Duration duration = Duration.between(parkedCar.getCheckingDate(), parkedCar.getCheckoutDate());
+        parkedCar.setDuration(duration);
         var hours = duration.toHours();
-        var price = hours * 10;
-        return new Ticket(price);
+        parkedCar.setPrice(parkedCar.getDuration().toHours()*10);
+        this.parkedCarDAO.update(parkedCar);
+        return new Ticket(parkedCar.getPrice());
 
     }
 

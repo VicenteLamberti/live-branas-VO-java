@@ -12,11 +12,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ParkingServiceTest {
 
+
     @Test
     void deveEntrarESairDoEstacionamentoCalculandoOValorDaTarifa(){
         var clock = new FakerClock();
 
-        var parkingService = new ParkingService(clock);
+        var parkingService = new ParkingService(clock, new ParkedCarMemory());
         var plate = "AAA9999";
         var expectedTicketPrice = 20;
         String dateChecking = "2021-03-01T10:00:00";
@@ -45,7 +46,7 @@ class ParkingServiceTest {
 
         var clock = new FakerClock();
 
-        var parkingService = new ParkingService(clock);
+        var parkingService = new ParkingService(clock,new ParkedCarMemory());
 
         Assertions.assertThrows(RuntimeException.class,()->parkingService.checkout("AAA999"));
 
@@ -56,7 +57,7 @@ class ParkingServiceTest {
     void naoDeveEntrarComPlacaInvalida(){
         var clock = new FakerClock();
 
-        var parkingService = new ParkingService(clock);
+        var parkingService = new ParkingService(clock,new ParkedCarMemory());
         var plate = "AA99";
         var expectedTicketPrice = 20;
         String dateChecking = "2021-03-01T10:00:00";
