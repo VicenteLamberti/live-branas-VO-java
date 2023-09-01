@@ -1,16 +1,17 @@
 package br.com.vicente;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 public class FakerClock implements Clock{
 
-    private Instant currentDate = Instant.now();
+    private LocalDateTime currentDate = LocalDateTime.now();
     @Override
-    public Instant getCurrentDate() {
+    public LocalDateTime getCurrentDate() {
         return currentDate;
     }
 
-    public void setCurrentDate(Instant date){
+    public void setCurrentDate(LocalDateTime date){
         this.currentDate = date;
     }
 }

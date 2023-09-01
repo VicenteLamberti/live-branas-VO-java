@@ -15,6 +15,9 @@ public class ParkingService {
 
     private final Clock clock;
 
+   private static final int OPEN_HOUR = 8;
+   private static final int CLOSE_HOUR = 22;
+
 
     public ParkingService(Clock clock, ParkedCarDAO parkedCarDAO) {
         this.clock = clock;
@@ -34,6 +37,13 @@ public class ParkingService {
             throw  new RuntimeException("Invalid plate");
         }
         var checkingDate = this.clock.getCurrentDate();
+
+        if(checkingDate.getHour() < OPEN_HOUR){
+            throw new RuntimeException("Parking is closed");
+        }
+        if(checkingDate.getHour() > CLOSE_HOUR){
+            throw new RuntimeException("Parking is closed");
+        }
         ParkedCar parkedCar = new ParkedCar(plate, checkingDate);
         this.parkedCarDAO.save(parkedCar);
     }

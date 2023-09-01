@@ -2,16 +2,17 @@ package br.com.vicente;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 public class ParkedCar {
 
     private String plate;
-    private Instant checkingDate;
-    private Instant checkoutDate;
+    private LocalDateTime checkingDate;
+    private LocalDateTime checkoutDate;
     private Duration duration;
     private long price;
 
-    public ParkedCar(String plate, Instant checkingDate) {
+    public ParkedCar(String plate, LocalDateTime checkingDate) {
         this.plate = plate;
         this.checkingDate = checkingDate;
     }
@@ -24,19 +25,19 @@ public class ParkedCar {
         this.plate = plate;
     }
 
-    public Instant getCheckingDate() {
+    public LocalDateTime getCheckingDate() {
         return checkingDate;
     }
 
-    public void setCheckingDate(Instant checkingDate) {
+    public void setCheckingDate(LocalDateTime checkingDate) {
         this.checkingDate = checkingDate;
     }
 
-    public Instant getCheckoutDate() {
+    public LocalDateTime getCheckoutDate() {
         return checkoutDate;
     }
 
-    public void setCheckoutDate(Instant checkoutDate) {
+    public void setCheckoutDate(LocalDateTime checkoutDate) {
         this.checkoutDate = checkoutDate;
     }
 

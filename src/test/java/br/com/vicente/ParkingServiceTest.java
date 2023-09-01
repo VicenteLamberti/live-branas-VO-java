@@ -23,17 +23,17 @@ class ParkingServiceTest {
         String dateChecking = "2021-03-01T10:00:00";
 
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-        LocalDateTime localDateTime = LocalDateTime.from(formatter.parse(dateChecking));
+        LocalDateTime instantChecking = LocalDateTime.from(formatter.parse(dateChecking));
 
-        Instant instantChecking = localDateTime.toInstant(ZoneOffset.UTC);
+
         clock.setCurrentDate(instantChecking);
 
         parkingService.checking(plate);
         String dateCheckout = "2021-03-01T12:00:00";
 
-        localDateTime = LocalDateTime.from(formatter.parse(dateCheckout));
+        LocalDateTime instantCheckout = LocalDateTime.from(formatter.parse(dateCheckout));
 
-        Instant instantCheckout = localDateTime.toInstant(ZoneOffset.UTC);
+
         clock.setCurrentDate(instantCheckout);
 
         var ticket = parkingService.checkout(plate);
@@ -48,7 +48,8 @@ class ParkingServiceTest {
 
         var parkingService = new ParkingService(clock,new ParkedCarMemory());
 
-        Assertions.assertThrows(RuntimeException.class,()->parkingService.checkout("AAA999"));
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> parkingService.checkout("AAA9999"));
+        Assertions.assertEquals("Parked car not found",runtimeException.getMessage());
 
     }
 
@@ -63,13 +64,50 @@ class ParkingServiceTest {
         String dateChecking = "2021-03-01T10:00:00";
 
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-        LocalDateTime localDateTime = LocalDateTime.from(formatter.parse(dateChecking));
+        LocalDateTime instantChecking = LocalDateTime.from(formatter.parse(dateChecking));
 
-        Instant instantChecking = localDateTime.toInstant(ZoneOffset.UTC);
         clock.setCurrentDate(instantChecking);
-
-        Assertions.assertThrows(RuntimeException.class,()->parkingService.checking(plate));
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> parkingService.checking(plate));
+        Assertions.assertEquals("Invalid plate",runtimeException.getMessage());
 
     }
 
+
+    @Test
+    void naoDeveEntrarAntesDeAbrirEstacionamento(){
+        var clock = new FakerClock();
+
+        var parkingService = new ParkingService(clock,new ParkedCarMemory());
+        var plate = "AAA9999";
+        var expectedTicketPrice = 20;
+        String dateChecking = "2021-03-01T07:00:00";
+
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime instantChecking = LocalDateTime.from(formatter.parse(dateChecking));
+
+        clock.setCurrentDate(instantChecking);
+
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> parkingService.checking(plate));
+        Assertions.assertEquals("Parking is closed",runtimeException.getMessage());
+
+    }
+
+    @Test
+    void naoDeveEntrarDepoisDeFecharEstacionamento(){
+        var clock = new FakerClock();
+
+        var parkingService = new ParkingService(clock,new ParkedCarMemory());
+        var plate = "AAA9999";
+        var expectedTicketPrice = 20;
+        String dateChecking = "2021-03-01T23:00:00";
+
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime instantChecking = LocalDateTime.from(formatter.parse(dateChecking));
+
+        clock.setCurrentDate(instantChecking);
+
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> parkingService.checking(plate));
+        Assertions.assertEquals("Parking is closed",runtimeException.getMessage());
+
+    }
 }
