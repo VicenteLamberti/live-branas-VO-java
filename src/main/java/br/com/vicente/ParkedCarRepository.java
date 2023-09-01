@@ -1,8 +1,8 @@
 package br.com.vicente;
 
-public interface ParkedCarDAO {
+public interface ParkedCarRepository {
 
     void save(ParkedCar parkedCar);
     void update(ParkedCar parkedCar);
-    ParkedCar get(Plate plate);
+    ParkedCar get(String plate);
 }

@@ -3,9 +3,7 @@ package br.com.vicente;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,7 +21,7 @@ class ParkingServiceTest {
 
         var period = new Period(start,end);
 
-        var parkingService = new ParkingService(clock, new ParkedCarMemory(),period);
+        var parkingService = new ParkingService(clock, new ParkedCarRepositoryMemory(),period);
         var plate = "AAA9999";
         var expectedTicketPrice = 20;
         String dateChecking = "2021-03-01T10:00:00";
@@ -58,7 +56,7 @@ class ParkingServiceTest {
 
         var period = new Period(start,end);
 
-        var parkingService = new ParkingService(clock, new ParkedCarMemory(),period);
+        var parkingService = new ParkingService(clock, new ParkedCarRepositoryMemory(),period);
 
         RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> parkingService.checkout("AAA9999"));
         Assertions.assertEquals("Parked car not found",runtimeException.getMessage());
@@ -76,7 +74,7 @@ class ParkingServiceTest {
 
         var period = new Period(start,end);
 
-        var parkingService = new ParkingService(clock, new ParkedCarMemory(),period);
+        var parkingService = new ParkingService(clock, new ParkedCarRepositoryMemory(),period);
         var plate = "AA99";
         var expectedTicketPrice = 20;
         String dateChecking = "2021-03-01T10:00:00";
@@ -99,7 +97,7 @@ class ParkingServiceTest {
 
         var period = new Period(start,end);
 
-        var parkingService = new ParkingService(clock, new ParkedCarMemory(),period);
+        var parkingService = new ParkingService(clock, new ParkedCarRepositoryMemory(),period);
         var plate = "AAA9999";
         var expectedTicketPrice = 20;
         String dateChecking = "2021-03-01T07:00:00";
@@ -123,7 +121,7 @@ class ParkingServiceTest {
 
         var period = new Period(start,end);
 
-        var parkingService = new ParkingService(clock, new ParkedCarMemory(),period);
+        var parkingService = new ParkingService(clock, new ParkedCarRepositoryMemory(),period);
         var plate = "AAA9999";
         var expectedTicketPrice = 20;
         String dateChecking = "2021-03-01T23:00:00";

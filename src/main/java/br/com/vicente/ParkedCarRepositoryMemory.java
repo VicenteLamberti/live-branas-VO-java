@@ -3,7 +3,7 @@ package br.com.vicente;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ParkedCarMemory implements ParkedCarDAO {
+public class ParkedCarRepositoryMemory implements ParkedCarRepository {
 
     private Map<String,ParkedCar> parkedCars = new HashMap<>();
 
@@ -18,7 +18,7 @@ public class ParkedCarMemory implements ParkedCarDAO {
     }
 
     @Override
-    public ParkedCar get(Plate plate) {
-        return this.parkedCars.get(plate.getValue());
+    public ParkedCar get(String plate) {
+        return this.parkedCars.get(plate);
     }
 }
