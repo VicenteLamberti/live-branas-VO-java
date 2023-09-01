@@ -25,17 +25,9 @@ public class ParkingService {
     }
 
     public void checking(String plate){
-        String regex = "[A-Z]{3}[0-9]{4}";
 
+        new Plate(plate);
 
-
-        Pattern pattern = Pattern.compile(regex);
-
-
-        Matcher matcher = pattern.matcher(plate);
-        if(!matcher.matches()){
-            throw  new RuntimeException("Invalid plate");
-        }
         var checkingDate = this.clock.getCurrentDate();
 
         if(checkingDate.getHour() < OPEN_HOUR){
