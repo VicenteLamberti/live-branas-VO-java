@@ -49,10 +49,11 @@ public class ParkingService {
 
         var checkoutDate = this.clock.getCurrentDate();
         parkedCar.setCheckoutDate(checkoutDate);
-        Duration duration = Duration.between(parkedCar.getCheckingDate(), parkedCar.getCheckoutDate());
-        parkedCar.setDuration(duration);
-        var hours = duration.toHours();
-        parkedCar.setPrice(parkedCar.getDuration().toHours()*10);
+        var period = new Period(parkedCar.getCheckingDate(), parkedCar.getCheckoutDate());
+        parkedCar.setDuration(period.getDurationInHours());
+
+        long price = parkedCar.getDuration() * 10;
+        parkedCar.setPrice(price);
         this.parkedCarDAO.update(parkedCar);
         return new Ticket(parkedCar.getPrice());
 

@@ -9,7 +9,7 @@ public class ParkedCar {
     private Plate plate;
     private LocalDateTime checkingDate;
     private LocalDateTime checkoutDate;
-    private Duration duration;
+    private long duration;
     private long price;
 
     public ParkedCar(Plate plate, LocalDateTime checkingDate) {
@@ -41,11 +41,11 @@ public class ParkedCar {
         this.checkoutDate = checkoutDate;
     }
 
-    public Duration getDuration() {
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(Duration duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
     }
 
