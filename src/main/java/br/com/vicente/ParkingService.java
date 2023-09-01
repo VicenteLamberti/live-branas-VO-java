@@ -9,15 +9,22 @@ public class ParkingService {
 
     private Map<String,ParkedCar> parkedCars = new HashMap<>();
 
-    public void checkin(String plate){
-        var checkingDate = Instant.now();
+    private final Clock clock;
+
+
+    public ParkingService(Clock clock) {
+        this.clock = clock;
+    }
+
+    public void checking(String plate){
+        var checkingDate = this.clock.getCurrentDate();
         this.parkedCars.put(plate,new ParkedCar(plate,checkingDate));
     }
 
     public Ticket checkout(String plate){
         var parkedCar = this.parkedCars.get(plate);
-        var checkoutDate = Instant.now();
-        Duration duration = Duration.between(checkoutDate, parkedCar.getCheckingDate());
+        var checkoutDate = this.clock.getCurrentDate();
+        Duration duration = Duration.between(parkedCar.getCheckingDate(), checkoutDate);
         var hours = duration.toHours();
         var price = hours * 10;
         return new Ticket(price);
