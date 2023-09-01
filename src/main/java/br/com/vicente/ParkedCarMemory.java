@@ -9,16 +9,16 @@ public class ParkedCarMemory implements ParkedCarDAO {
 
     @Override
     public void save(ParkedCar parkedCar) {
-        this.parkedCars.put(parkedCar.getPlate(),parkedCar);
+        this.parkedCars.put(parkedCar.getPlate().getValue(),parkedCar);
     }
 
     @Override
     public void update(ParkedCar parkedCar) {
-        this.parkedCars.put(parkedCar.getPlate(),parkedCar);
+        this.parkedCars.put(parkedCar.getPlate().getValue(),parkedCar);
     }
 
     @Override
-    public ParkedCar get(String plate) {
-        return this.parkedCars.get(plate);
+    public ParkedCar get(Plate plate) {
+        return this.parkedCars.get(plate.getValue());
     }
 }

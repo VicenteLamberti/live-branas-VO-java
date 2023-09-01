@@ -6,22 +6,22 @@ import java.time.LocalDateTime;
 
 public class ParkedCar {
 
-    private String plate;
+    private Plate plate;
     private LocalDateTime checkingDate;
     private LocalDateTime checkoutDate;
     private Duration duration;
     private long price;
 
-    public ParkedCar(String plate, LocalDateTime checkingDate) {
+    public ParkedCar(Plate plate, LocalDateTime checkingDate) {
         this.plate = plate;
         this.checkingDate = checkingDate;
     }
 
-    public String getPlate() {
+    public Plate getPlate() {
         return plate;
     }
 
-    public void setPlate(String plate) {
+    public void setPlate(Plate plate) {
         this.plate = plate;
     }
 

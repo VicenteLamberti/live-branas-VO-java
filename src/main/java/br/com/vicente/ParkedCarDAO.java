@@ -4,5 +4,5 @@ public interface ParkedCarDAO {
 
     void save(ParkedCar parkedCar);
     void update(ParkedCar parkedCar);
-    ParkedCar get(String plate);
+    ParkedCar get(Plate plate);
 }

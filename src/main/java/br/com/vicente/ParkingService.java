@@ -26,7 +26,7 @@ public class ParkingService {
 
     public void checking(String plate){
 
-        new Plate(plate);
+        Plate plateVO = new Plate(plate);
 
         var checkingDate = this.clock.getCurrentDate();
 
@@ -36,12 +36,13 @@ public class ParkingService {
         if(checkingDate.getHour() > CLOSE_HOUR){
             throw new RuntimeException("Parking is closed");
         }
-        ParkedCar parkedCar = new ParkedCar(plate, checkingDate);
+        ParkedCar parkedCar = new ParkedCar(plateVO, checkingDate);
         this.parkedCarDAO.save(parkedCar);
     }
 
     public Ticket checkout(String plate){
-        var parkedCar = this.parkedCarDAO.get(plate);
+        Plate plateVO = new Plate(plate);
+        var parkedCar = this.parkedCarDAO.get(plateVO);
         if(parkedCar == null){
             throw new RuntimeException("Parked car not found");
         }
