@@ -15,7 +15,7 @@ class ParkingServiceTest {
         parkingService.checkin(plate);
         var ticket = parkingService.checkout(plate);
 
-        Assertions.assertEquals(expectedTicketPrice, ticket.price());
+        Assertions.assertEquals(expectedTicketPrice, ticket.getPrice());
     }
 
 }
