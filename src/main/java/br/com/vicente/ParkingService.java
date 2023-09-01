@@ -4,6 +4,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ParkingService {
 
@@ -17,6 +19,17 @@ public class ParkingService {
     }
 
     public void checking(String plate){
+        String regex = "[A-Z]{3}[0-9]{4}";
+
+
+
+        Pattern pattern = Pattern.compile(regex);
+
+
+        Matcher matcher = pattern.matcher(plate);
+        if(!matcher.matches()){
+            throw  new RuntimeException("Invalid plate");
+        }
         var checkingDate = this.clock.getCurrentDate();
         this.parkedCars.put(plate,new ParkedCar(plate,checkingDate));
     }

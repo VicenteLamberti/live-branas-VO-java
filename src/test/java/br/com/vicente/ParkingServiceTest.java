@@ -17,7 +17,7 @@ class ParkingServiceTest {
         var clock = new FakerClock();
 
         var parkingService = new ParkingService(clock);
-        var plate = "AAA999";
+        var plate = "AAA9999";
         var expectedTicketPrice = 20;
         String dateChecking = "2021-03-01T10:00:00";
 
@@ -48,6 +48,26 @@ class ParkingServiceTest {
         var parkingService = new ParkingService(clock);
 
         Assertions.assertThrows(RuntimeException.class,()->parkingService.checkout("AAA999"));
+
+    }
+
+
+    @Test
+    void naoDeveEntrarComPlacaInvalida(){
+        var clock = new FakerClock();
+
+        var parkingService = new ParkingService(clock);
+        var plate = "AA99";
+        var expectedTicketPrice = 20;
+        String dateChecking = "2021-03-01T10:00:00";
+
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime localDateTime = LocalDateTime.from(formatter.parse(dateChecking));
+
+        Instant instantChecking = localDateTime.toInstant(ZoneOffset.UTC);
+        clock.setCurrentDate(instantChecking);
+
+        Assertions.assertThrows(RuntimeException.class,()->parkingService.checking(plate));
 
     }
 
