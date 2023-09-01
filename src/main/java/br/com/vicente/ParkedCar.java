@@ -23,25 +23,19 @@ public class ParkedCar {
         return plate;
     }
 
-    public void setPlate(Plate plate) {
-        this.plate = plate;
-    }
+
 
     public LocalDateTime getCheckingDate() {
         return checkingDate;
     }
 
-    public void setCheckingDate(LocalDateTime checkingDate) {
-        this.checkingDate = checkingDate;
-    }
+
 
     public LocalDateTime getCheckoutDate() {
         return checkoutDate;
     }
 
-    public void setCheckoutDate(LocalDateTime checkoutDate) {
-        this.checkoutDate = checkoutDate;
-    }
+
 
     public long getDuration() {
         return duration;
@@ -55,9 +49,7 @@ public class ParkedCar {
         return price;
     }
 
-    public void setPrice(long price) {
-        this.price = price;
-    }
+
 
     public void checkout(LocalDateTime checkoutDate){
         this.checkoutDate = checkoutDate;

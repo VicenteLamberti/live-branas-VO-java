@@ -12,7 +12,5 @@ public class Ticket {
         return price;
     }
 
-    public void setPrice(long price) {
-        this.price = price;
-    }
+
 }
