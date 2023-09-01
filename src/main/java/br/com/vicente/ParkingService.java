@@ -48,7 +48,7 @@ public class ParkingService {
         }
 
         var checkoutDate = this.clock.getCurrentDate();
-        parkedCar.setCheckoutDate(checkoutDate);
+        parkedCar.checkout(checkoutDate);
         var period = new Period(parkedCar.getCheckingDate(), parkedCar.getCheckoutDate());
         parkedCar.setDuration(period.getDurationInHours());
 
