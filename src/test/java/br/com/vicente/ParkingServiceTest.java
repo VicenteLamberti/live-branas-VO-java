@@ -21,7 +21,8 @@ class ParkingServiceTest {
 
         var period = new Period(start,end);
 
-        var parkingService = new ParkingService(clock, new ParkedCarRepositoryMemory(),period);
+        ParkedCarRepositoryMemory memory =  new ParkedCarRepositoryMemory();
+        var checking = new Checkin(clock,memory ,period);
         var plate = "AAA9999";
         var expectedTicketPrice = 20;
         String dateChecking = "2021-03-01T10:00:00";
@@ -32,7 +33,7 @@ class ParkingServiceTest {
 
         clock.setCurrentDate(instantChecking);
 
-        parkingService.checking(plate);
+        checking.execute(plate);
         String dateCheckout = "2021-03-01T12:00:00";
 
         LocalDateTime instantCheckout = LocalDateTime.from(formatter.parse(dateCheckout));
@@ -40,7 +41,8 @@ class ParkingServiceTest {
 
         clock.setCurrentDate(instantCheckout);
 
-        var ticket = parkingService.checkout(plate);
+        var checkout = new Checkout(clock,memory ,period);
+        var ticket = checkout.execute(plate);
 
         Assertions.assertEquals(expectedTicketPrice, ticket.getPrice());
     }
@@ -55,10 +57,9 @@ class ParkingServiceTest {
         LocalDateTime end = LocalDateTime.from(formatter.parse("2021-03-01T22:00:00"));
 
         var period = new Period(start,end);
+        var checkout = new Checkout(clock, new ParkedCarRepositoryMemory(),period);
 
-        var parkingService = new ParkingService(clock, new ParkedCarRepositoryMemory(),period);
-
-        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> parkingService.checkout("AAA9999"));
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> checkout.execute("AAA9999"));
         Assertions.assertEquals("Parked car not found",runtimeException.getMessage());
 
     }
@@ -74,7 +75,7 @@ class ParkingServiceTest {
 
         var period = new Period(start,end);
 
-        var parkingService = new ParkingService(clock, new ParkedCarRepositoryMemory(),period);
+        var checking = new Checkin(clock, new ParkedCarRepositoryMemory(),period);
         var plate = "AA99";
         var expectedTicketPrice = 20;
         String dateChecking = "2021-03-01T10:00:00";
@@ -82,7 +83,7 @@ class ParkingServiceTest {
         LocalDateTime instantChecking = LocalDateTime.from(formatter.parse(dateChecking));
 
         clock.setCurrentDate(instantChecking);
-        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> parkingService.checking(plate));
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> checking.execute(plate));
         Assertions.assertEquals("Invalid plate",runtimeException.getMessage());
 
     }
@@ -97,7 +98,7 @@ class ParkingServiceTest {
 
         var period = new Period(start,end);
 
-        var parkingService = new ParkingService(clock, new ParkedCarRepositoryMemory(),period);
+        var checking = new Checkin(clock, new ParkedCarRepositoryMemory(),period);
         var plate = "AAA9999";
         var expectedTicketPrice = 20;
         String dateChecking = "2021-03-01T07:00:00";
@@ -106,7 +107,7 @@ class ParkingServiceTest {
 
         clock.setCurrentDate(instantChecking);
 
-        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> parkingService.checking(plate));
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> checking.execute(plate));
         Assertions.assertEquals("Parking is closed",runtimeException.getMessage());
 
     }
@@ -121,7 +122,7 @@ class ParkingServiceTest {
 
         var period = new Period(start,end);
 
-        var parkingService = new ParkingService(clock, new ParkedCarRepositoryMemory(),period);
+        var checking = new Checkin(clock, new ParkedCarRepositoryMemory(),period);
         var plate = "AAA9999";
         var expectedTicketPrice = 20;
         String dateChecking = "2021-03-01T23:00:00";
@@ -131,7 +132,7 @@ class ParkingServiceTest {
 
         clock.setCurrentDate(instantChecking);
 
-        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> parkingService.checking(plate));
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> checking.execute(plate));
         Assertions.assertEquals("Parking is closed",runtimeException.getMessage());
 
     }

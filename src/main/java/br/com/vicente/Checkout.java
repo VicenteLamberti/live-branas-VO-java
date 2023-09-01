@@ -1,6 +1,6 @@
-package br.com.vicente;
+ package br.com.vicente;
 
-public class ParkingService {
+public class Checkout {
 
 
 
@@ -13,27 +13,14 @@ public class ParkingService {
    private final Period workingHours;
 
 
-    public ParkingService(Clock clock, ParkedCarRepository parkedCarDAO, Period workingHours) {
+    public Checkout(Clock clock, ParkedCarRepository parkedCarDAO, Period workingHours) {
         this.clock = clock;
         this.parkedCarDAO = parkedCarDAO;
         this.workingHours =workingHours;
     }
 
-    public void checking(String plate){
 
-        Plate plateVO = new Plate(plate);
-
-        var checkingDate = this.clock.getCurrentDate();
-
-        if(this.workingHours.isOutOfPeriod(checkingDate)){
-            throw new RuntimeException("Parking is closed");
-        }
-
-        ParkedCar parkedCar = new ParkedCar(plateVO, checkingDate);
-        this.parkedCarDAO.save(parkedCar);
-    }
-
-    public Ticket checkout(String plate){
+    public Ticket execute(String plate){
         Plate plateVO = new Plate(plate);
         var parkedCar = this.parkedCarDAO.get(plateVO.getValue());
         if(parkedCar == null){
