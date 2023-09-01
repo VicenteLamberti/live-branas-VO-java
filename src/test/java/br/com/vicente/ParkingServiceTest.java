@@ -17,12 +17,18 @@ class ParkingServiceTest {
     void deveEntrarESairDoEstacionamentoCalculandoOValorDaTarifa(){
         var clock = new FakerClock();
 
-        var parkingService = new ParkingService(clock, new ParkedCarMemory());
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime start = LocalDateTime.from(formatter.parse("2021-03-01T08:00:00"));
+        LocalDateTime end = LocalDateTime.from(formatter.parse("2021-03-01T22:00:00"));
+
+        var period = new Period(start,end);
+
+        var parkingService = new ParkingService(clock, new ParkedCarMemory(),period);
         var plate = "AAA9999";
         var expectedTicketPrice = 20;
         String dateChecking = "2021-03-01T10:00:00";
 
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+
         LocalDateTime instantChecking = LocalDateTime.from(formatter.parse(dateChecking));
 
 
@@ -46,7 +52,13 @@ class ParkingServiceTest {
 
         var clock = new FakerClock();
 
-        var parkingService = new ParkingService(clock,new ParkedCarMemory());
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime start = LocalDateTime.from(formatter.parse("2021-03-01T08:00:00"));
+        LocalDateTime end = LocalDateTime.from(formatter.parse("2021-03-01T22:00:00"));
+
+        var period = new Period(start,end);
+
+        var parkingService = new ParkingService(clock, new ParkedCarMemory(),period);
 
         RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> parkingService.checkout("AAA9999"));
         Assertions.assertEquals("Parked car not found",runtimeException.getMessage());
@@ -58,12 +70,17 @@ class ParkingServiceTest {
     void naoDeveEntrarComPlacaInvalida(){
         var clock = new FakerClock();
 
-        var parkingService = new ParkingService(clock,new ParkedCarMemory());
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime start = LocalDateTime.from(formatter.parse("2021-03-01T08:00:00"));
+        LocalDateTime end = LocalDateTime.from(formatter.parse("2021-03-01T22:00:00"));
+
+        var period = new Period(start,end);
+
+        var parkingService = new ParkingService(clock, new ParkedCarMemory(),period);
         var plate = "AA99";
         var expectedTicketPrice = 20;
         String dateChecking = "2021-03-01T10:00:00";
 
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         LocalDateTime instantChecking = LocalDateTime.from(formatter.parse(dateChecking));
 
         clock.setCurrentDate(instantChecking);
@@ -76,13 +93,17 @@ class ParkingServiceTest {
     @Test
     void naoDeveEntrarAntesDeAbrirEstacionamento(){
         var clock = new FakerClock();
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime start = LocalDateTime.from(formatter.parse("2021-03-01T08:00:00"));
+        LocalDateTime end = LocalDateTime.from(formatter.parse("2021-03-01T22:00:00"));
 
-        var parkingService = new ParkingService(clock,new ParkedCarMemory());
+        var period = new Period(start,end);
+
+        var parkingService = new ParkingService(clock, new ParkedCarMemory(),period);
         var plate = "AAA9999";
         var expectedTicketPrice = 20;
         String dateChecking = "2021-03-01T07:00:00";
 
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         LocalDateTime instantChecking = LocalDateTime.from(formatter.parse(dateChecking));
 
         clock.setCurrentDate(instantChecking);
@@ -96,12 +117,18 @@ class ParkingServiceTest {
     void naoDeveEntrarDepoisDeFecharEstacionamento(){
         var clock = new FakerClock();
 
-        var parkingService = new ParkingService(clock,new ParkedCarMemory());
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime start = LocalDateTime.from(formatter.parse("2021-03-01T08:00:00"));
+        LocalDateTime end = LocalDateTime.from(formatter.parse("2021-03-01T22:00:00"));
+
+        var period = new Period(start,end);
+
+        var parkingService = new ParkingService(clock, new ParkedCarMemory(),period);
         var plate = "AAA9999";
         var expectedTicketPrice = 20;
         String dateChecking = "2021-03-01T23:00:00";
 
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+
         LocalDateTime instantChecking = LocalDateTime.from(formatter.parse(dateChecking));
 
         clock.setCurrentDate(instantChecking);

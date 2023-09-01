@@ -19,4 +19,11 @@ public class Period {
     public long getDurationInHours(){
         return Duration.between(start, end).toHours();
     }
+
+    public boolean isOutOfPeriod(LocalDateTime date) {
+        if(date.isBefore(start)) return true;
+        if(date.isAfter(end)) return true;
+        return false;
+
+    }
 }
