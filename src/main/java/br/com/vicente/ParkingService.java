@@ -23,6 +23,9 @@ public class ParkingService {
 
     public Ticket checkout(String plate){
         var parkedCar = this.parkedCars.get(plate);
+        if(parkedCar == null){
+            throw new RuntimeException("Parked car not found");
+        }
         var checkoutDate = this.clock.getCurrentDate();
         Duration duration = Duration.between(parkedCar.getCheckingDate(), checkoutDate);
         var hours = duration.toHours();

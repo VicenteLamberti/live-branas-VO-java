@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="br.com.vicente.ParkingServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-09-01T15:32:41" hostname="NLAMBERT" time="7.753">
+<testsuite name="br.com.vicente.ParkingServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-09-01T15:37:21" hostname="NLAMBERT" time="0.018">
   <properties/>
-  <testcase name="deveEntrarESairDoEstacionamentoCalculandoOValorDaTarifa()" classname="br.com.vicente.ParkingServiceTest" time="7.753"/>
+  <testcase name="naoLancarUmErroCasoUmCarroNaoEncontradoTenteSair()" classname="br.com.vicente.ParkingServiceTest" time="0.018"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

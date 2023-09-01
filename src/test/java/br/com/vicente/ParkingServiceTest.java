@@ -40,4 +40,15 @@ class ParkingServiceTest {
         Assertions.assertEquals(expectedTicketPrice, ticket.getPrice());
     }
 
+    @Test
+    void naoLancarUmErroCasoUmCarroNaoEncontradoTenteSair(){
+
+        var clock = new FakerClock();
+
+        var parkingService = new ParkingService(clock);
+
+        Assertions.assertThrows(RuntimeException.class,()->parkingService.checkout("AAA999"));
+
+    }
+
 }
